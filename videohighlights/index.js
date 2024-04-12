@@ -145,7 +145,7 @@ async function waitForTranscriptionJobToComplete(token, jobid) {
     }
     return data;
   }
-async function createfinalhighlishts(){
+async function createFinalHighlishts(){
 const token = await getToken(CLIENT_ID, CLIENT_SECRET);
 const data = await generateUploadUrl(token);
 const VIDEO_PATH = process.env.VIDEO_PATH;
@@ -157,5 +157,5 @@ const highlightdata = await waitForHighlightsJobToComplete(token, highlightjobid
 console.log(highlightdata);  
 }
 
-createfinalhighlishts()
+createFinalHighlishts()
   
