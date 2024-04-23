@@ -3,8 +3,7 @@ package-lock.json
 .vscode
 
 #Ignore environment file
-.env
+*.env
 
 #ignore DS_STORE files
 .DS_Store
-texttovideo/.DS_Store
