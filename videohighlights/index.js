@@ -145,6 +145,96 @@ async function waitForTranscriptionJobToComplete(token, jobid) {
     }
     return data;
   }
+
+  // Calls storyboard API with payload present in payload.js and returns jobid as output
+async function createPreviewStoryboard(token,fileUrl,highlightData) {
+  const BASE_URL = process.env.BASE_URL;
+  const STORYBOARD_ROUTE = process.env.STORYBOARD_ROUTE;
+  const USER_ID = process.env.USER_ID;
+  const url = `${BASE_URL}${STORYBOARD_ROUTE}`;
+  const textToVideoPayload = payloads.prepareStoryboardPayload(fileUrl,highlightData);
+  const headers = payloads.setHeaders(token, USER_ID);
+
+  try {
+    const response = await axios.post(url, textToVideoPayload, { headers });
+    return response.data.jobId;
+  } catch (error) {
+    console.error(`Error while storyboard: ${error}`);
+    return null;
+  }
+}
+// Waits for storyboard job to get complete
+async function waitForStoryboardJobToComplete(token, jobid) {
+  let response = {};
+  let renderData = {};
+
+  do {
+    response = await getJobId(token, jobid);
+
+    if (response.status === 'in-progress') {
+      console.log(`Please wait, Storyboard job with jobId ${jobid} is still in progress...`);
+    }
+
+    await wait(20000); // Wait for 20 seconds before checking again
+  } while (response.status === 'in-progress')
+
+  renderData.audioSettings = response.renderParams.audio;
+  renderData.outputSettings = response.renderParams.output;
+  renderData.scenesSettings = response.renderParams.scenes;
+  return renderData;
+}
+
+// Calls render endpoint with payload came from storyboard and returns jobid as output
+async function createVideoRender(token, renderData) {
+  const BASE_URL = process.env.BASE_URL;
+  const RENDER_ROUTE = process.env.RENDER_ROUTE;
+  const USER_ID = process.env.USER_ID;
+  const url = BASE_URL + RENDER_ROUTE;
+  const renderRequestPayload = payloads.createRenderPayload(renderData.audioSettings, renderData.outputSettings, renderData.scenesSettings);
+  const headers = payloads.setHeaders(token, USER_ID);
+  try {
+    const response = await axios.post(url, renderRequestPayload, { headers });
+    let data = await response.data.data;
+    const jobid = data.job_id;
+    return jobid;
+  } catch (e) {
+    console.error(`Error while render: ${e}`);
+    return null;
+  }
+}
+
+// Waits for render job to get complete
+async function waitForRenderJobToComplete(token, jobid) {
+
+  do {
+    data = await getJobId(token, jobid);
+
+    if (data.status === 'in-progress') {
+      console.log(`Please wait, Video Rendering job with jobId ${jobid} is still in progress...`);
+    }
+    await wait(60000); // Wait for 60 seconds before checking again
+
+  } while (data.status === 'in-progress')
+
+  const url = data.shareVideoURL;
+  return url;
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+// Download the final video generated
+async function downloadVideo(url, path) {
+  const destination = path;
+  const writer = fs.createWriteStream(destination);
+  const response = await axios.get(url, { responseType: 'stream' });
+  response.data.pipe(writer);
+  return new Promise((resolve, reject) => {
+    writer.on('finish', resolve);
+    writer.on('error', reject);
+  });
+}
+
 async function createFinalHighlights(){
 const token = await getToken(CLIENT_ID, CLIENT_SECRET);
 const data = await generateUploadUrl(token);
@@ -155,6 +245,19 @@ const transcriptiondata = await waitForTranscriptionJobToComplete(token, jobid);
 const highlightjobid = await createHighlights(token, transcriptiondata);
 const highlightdata = await waitForHighlightsJobToComplete(token, highlightjobid);
 console.log(highlightdata);  
+const storyboardJobId=await createPreviewStoryboard(token,data.url,highlightdata)
+
+console.log("Step 3/6 Status: Waiting for Video Preview.");
+const renderData = await waitForStoryboardJobToComplete(token, storyboardJobId);
+
+console.log("Step 4/6 : Status: in-progress sending Video Generation Request.");
+const rander_jobid = await createVideoRender(token, renderData);
+
+console.log("Step 5/6: Video generation Request Sent. now waiting for video generation to complete video");
+const url = await waitForRenderJobToComplete(token, rander_jobid);
+
+downloadVideo(url, "highlights.mp4");
+console.log("Completed: Video downloaded with name highlights.mp4 complete");
 }
 
 createFinalHighlights()
