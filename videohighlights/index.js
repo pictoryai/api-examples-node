@@ -140,19 +140,16 @@ async function createHighlights(token, transcriptdata) {
 
 // Waits for highlights job to get complete
 async function waitForJobToComplete(jobName, token, jobid, pollDuration) {
-  /* let data = await getJobId(token, jobid);
-  while (JSON.stringify(data).includes('in-progress')) {
-    data = await getJobId(token, jobid);
-  } */
-
   do {
     response = await getJobId(token, jobid);
 
     if (response.status === 'in-progress') {
       console.log(`Please wait, ${jobName} job with jobId ${jobid} is still in progress...`);
     }
+
     await wait(pollDuration * 1000); // Wait for `pollDuration` seconds before checking again
   } while (response.status === 'in-progress')
+
   return response;
 }
 
@@ -173,26 +170,6 @@ async function createPreviewStoryboard(token, fileUrl, highlightData) {
     return null;
   }
 }
-// Waits for storyboard job to get complete
-async function waitForStoryboardJobToComplete(token, jobid) {
-  let response = {};
-  let renderData = {};
-
-  do {
-    response = await getJobId(token, jobid);
-
-    if (response.status === 'in-progress') {
-      console.log(`Please wait, Storyboard job with jobId ${jobid} is still in progress...`);
-    }
-
-    await wait(20000); // Wait for 20 seconds before checking again
-  } while (response.status === 'in-progress')
-
-  renderData.audioSettings = response.renderParams.audio;
-  renderData.outputSettings = response.renderParams.output;
-  renderData.scenesSettings = response.renderParams.scenes;
-  return renderData;
-}
 
 // Calls render endpoint with payload came from storyboard and returns jobid as output
 async function createVideoRender(token, renderData) {
@@ -211,23 +188,6 @@ async function createVideoRender(token, renderData) {
     console.error(`Error while render: ${e}`);
     return null;
   }
-}
-
-// Waits for render job to get complete
-async function waitForRenderJobToComplete(token, jobid) {
-
-  do {
-    data = await getJobId(token, jobid);
-
-    if (data.status === 'in-progress') {
-      console.log(`Please wait, Video Rendering job with jobId ${jobid} is still in progress...`);
-    }
-    await wait(60000); // Wait for 60 seconds before checking again
-
-  } while (data.status === 'in-progress')
-
-  const url = data.shareVideoURL;
-  return url;
 }
 
 function wait(ms) {
