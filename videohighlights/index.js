@@ -52,8 +52,8 @@ async function uploadVideo(url, videoPath) {
   console.log("Current directory:", currentDirectory);
 
   const videoData = await new Promise((resolve, reject) => {
-    //const filePath = `${currentDirectory}/${videoPath}`;
-    const filePath = `${videoPath}`;
+    const filePath = `${currentDirectory}/${videoPath}`;
+    //const filePath = `${videoPath}`;
     fs.readFile(filePath, (err, data) => {
       if (err) {
         reject(err);
@@ -258,7 +258,7 @@ async function createFinalHighlights() {
   const jobid = await createTranscription(token, data.url, 'en-US');
   const transcriptiondata = await waitForJobToComplete("Transcription", token, jobid, 20);
 
-  const highlightjobid = await createHighlights(token, transcriptiondata);
+  const highlightjobid = await x(token, transcriptiondata);
   const highlightdata = await waitForJobToComplete("Highlights", token, highlightjobid, 60);
   console.log(highlightdata);
 
