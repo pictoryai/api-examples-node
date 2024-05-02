@@ -218,7 +218,7 @@ async function createFinalHighlights() {
   const jobid = await createTranscription(token, data.url, 'en-US');
   const transcriptiondata = await waitForJobToComplete("Transcription", token, jobid, 20);
 
-  const highlightjobid = await x(token, transcriptiondata);
+  const highlightjobid = await createHighlights(token, transcriptiondata);
   const highlightdata = await waitForJobToComplete("Highlights", token, highlightjobid, 60);
   console.log(highlightdata);
 
