@@ -54,8 +54,58 @@ function createAuthTokenPayload(clientId, clientSecret) {
     };
     return payload;
   }
+  function prepareStoryboardPayload(fileUrl, transcribeResult) {
+    let storyBoardJob = {
+      videoName: "highlight_video",
+      scenes: []
+    };
+    transcribeResult.transcript.forEach((sentence) => {
+      let sentenceText = sentence.words.reduce((acc, item) => {
+        if (item.word.length > 0) {
+          acc = acc + " " + item.word;
+        }
+        return acc;
+      }, "");
 
-module.exports={createAuthTokenPayload,createGenerateUrlPayload,createTranscriptionPayload,setHeaders,setAuthHeaders,createHighlightsPayload}
+
+      let backgroundSegments = [];
+
+      sentence.words.forEach(word => {
+        let segment = {
+            start: word.start_time,
+            end: word.end_time
+        };
+
+        backgroundSegments.push(segment);
+    });
+
+      if(transcribeResult)
+      storyBoardJob.scenes.push({
+        text: sentenceText,
+        backgroundUri: fileUrl,
+        backgroundType: "video",
+        backgroundVideoSegments: backgroundSegments,
+        voiceOver: false,
+        splitTextOnNewLine: false,
+        splitTextOnPeriod: false,
+        subtitle: true
+      });
+    });
+    console.log(storyBoardJob)
+    return storyBoardJob;
+}
+ // This function creates render payload
+ function createRenderPayload(audio, output, scenes) {
+  let payload = {};
+  payload.audio = audio;
+  payload.output = output;
+  payload.scenes = scenes;
+  payload.next_generation_video = true;
+  payload.containsTextToImage = true;
+  return payload;
+}
+
+module.exports={createAuthTokenPayload,createGenerateUrlPayload,createTranscriptionPayload,setHeaders,setAuthHeaders,createHighlightsPayload,prepareStoryboardPayload,createRenderPayload}
   
   
   
