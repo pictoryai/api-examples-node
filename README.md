@@ -13,7 +13,12 @@ Ensure you have the following prerequisites installed:
 Note: If you don't have your CLIENT_ID, CLIENT_SECRET and X-Pictory-User-Id please contact us at *support@pictory.ai*.
 
 # How to run
+
+Step 1. Go to the desired example folder Directory
+
+Step 2.
 ```shell
+npm install
 CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> node index.js
 ```
 
