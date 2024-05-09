@@ -10,7 +10,9 @@ Before starting, ensure you have Node.js and npm installed on your machine.
 Clone this repository:
 
 
-```git clone https://github.com/your-username/text-to-video-node-example.git ``` 
+```shell
+git clone https://github.com/your-username/text-to-video-node-example.git
+``` 
 
 
 
