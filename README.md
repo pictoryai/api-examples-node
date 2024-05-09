@@ -4,15 +4,6 @@ Pictory is an AI technology company that offers an API for generating videos usi
 
 This repository contains an example implementation of using Pictory Cloud APIs for text-to-video conversion, video transcription generation, and video summary generation in a Node.js environment 
 
-## Text to Video Generation
-
-Pictory's Text-to-Video APIs offer a dynamic way to transform the text into engaging videos.
-
-These APIs allow for the creation and editing of videos based on various text inputs. For instance, if you have a blog or an article, you can easily convert it into a captivating video by simply providing the webpage URL. Text-to-Video APIs open up various possibilities, including:
-
-1. Generating new videos directly from existing text content.
-2. Converting your published blogs or articles into videos using their URLs.
-
 # Prerequisites
 Ensure you have the following prerequisites installed:
 
@@ -26,8 +17,18 @@ Note: If you don't have your CLIENT_ID, CLIENT_SECRET and X-Pictory-User-Id plea
 CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> node index.js
 ```
 
+## Text to Video Generation
 
-## Text to Video Examples
+Pictory's Text-to-Video APIs offer a dynamic way to transform the text into engaging videos.
+
+These APIs allow for the creation and editing of videos based on various text inputs. For instance, if you have a blog or an article, you can easily convert it into a captivating video by simply providing the webpage URL. Text-to-Video APIs open up various possibilities, including:
+
+1. Generating new videos directly from existing text content.
+2. Converting your published blogs or articles into videos using their URLs.
+
+
+
+### Text to Video Examples
 
 1. [Convert Text to Video using Storyboard API](https://github.com/pictoryai/api-examples-node/tree/main/texttovideo/basic) 
 2. [Add Brand Logo to your Videos](https://github.com/pictoryai/api-examples-node/tree/main/texttovideo/addbrandlogo) 
