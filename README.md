@@ -8,11 +8,10 @@ This repository contains an example implementation of using Pictory Cloud APIs f
 Before starting, ensure you have Node.js and npm installed on your machine.
 
 Clone this repository:
-<div style="background-color: rgb(50, 50, 50);">
+
 
 ```git clone https://github.com/your-username/text-to-video-node-example.git ``` 
 
-</div>
 
 
 ## Text to Video Generation
