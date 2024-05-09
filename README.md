@@ -1,4 +1,18 @@
-# Text to Video Generation
+# Pictory Node.js Examples
+
+Pictory is an AI technology company that offers an API for generating videos using artificial intelligence. Our platform allows businesses/individuals to create video content without requiring in-house AI engineers or data scientists.
+
+This repository contains an example implementation of using Pictory Cloud APIs for text-to-video conversion, video transcription generation, and video summary generation in a Node.js environment.
+
+# Installation
+Before starting, ensure you have Node.js and npm installed on your machine.
+
+`Clone this repository:
+bash
+Copy code
+git clone https://github.com/your-username/text-to-video-node-example.git` 
+
+## Text to Video Generation
 
 Pictory's Text-to-Video APIs offer a dynamic way to transform the text into engaging videos.
 
