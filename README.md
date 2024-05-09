@@ -36,6 +36,6 @@ These APIs allow for the creation and editing of videos based on various text in
 4. [Add Intro / Outro scenes to your Videos](https://github.com/pictoryai/api-examples-node/tree/main/texttovideo/introoutro)
 
 
-# Video Summary and Transcription Examples
+## Video Summary and Transcription Examples
 1. [Summarize your existing Video](https://github.com/pictoryai/api-examples-node/tree/main/videohighlights)
 2. [Burn Subtitles to your existing Video](https://github.com/pictoryai/api-examples-node/tree/main/videotranscription)
