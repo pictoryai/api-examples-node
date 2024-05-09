@@ -7,10 +7,10 @@ This repository contains an example implementation of using Pictory Cloud APIs f
 # Installation
 Before starting, ensure you have Node.js and npm installed on your machine.
 
-`Clone this repository:
+```Clone this repository:
 bash
 Copy code
-git clone https://github.com/your-username/text-to-video-node-example.git` 
+git clone https://github.com/your-username/text-to-video-node-example.git``` 
 
 ## Text to Video Generation
 
