@@ -194,8 +194,8 @@ async function waitForStoryboardJobToComplete(token, jobid) {
 async function createAudioToVideo(){
     const token = await getToken(CLIENT_ID, CLIENT_SECRET);
     const data = await generateUploadUrl(token);
-    const VIDEO_PATH = process.env.VIDEO_PATH;
-    await uploadVideo(data.signedUrl, VIDEO_PATH);
+    const AUDIO_PATH = process.env.AUDIO_PATH;
+    await uploadVideo(data.signedUrl, AUDIO_PATH);
     const jobid = await createTranscription(token, data.url, 'en-US');
     const transcriptiondata = await waitForTranscriptionJobToComplete(token, jobid);
     let text=transcriptiondata.txt;
