@@ -10,7 +10,7 @@ Note: If you don't have your CLIENT_ID, CLIENT_SECRET and X-Pictory-User-Id plea
 ```
 CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> node index.js
 ```
-`createFinalHighlights` method is called on executing `index.js` file 
+`createAudioToVideo` method is called on executing `index.js` file 
 # Usage
  1. You can also choose to Update USER_ID,CLIENT_ID and CLIENT_SECRET in .env file.
 
@@ -18,7 +18,7 @@ CLIENT_ID=<YOUR_CLIENT_ID> CLIENT_SECRET=<YOUR_CLIENT_SECRET> node index.js
 
      a. **Authentication**: Generate an access token using the provided client ID and client secret.
     
-     b. **Upload Video and Generate Transcription**: Upload the video on Pictory s3 bucket and generate text transcription.
+     b. **Upload Audio and Generate Transcription**: Upload the Audio on Pictory s3 bucket and generate text transcription.
     
      c. **Storyboard Creation**: Call the storyboard API with predefined payloads to create a storyboard. Returns a job ID.
          
