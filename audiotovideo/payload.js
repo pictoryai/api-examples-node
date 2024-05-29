@@ -10,7 +10,7 @@ function createAuthTokenPayload(clientId, clientSecret) {
   // This function creates genrate url payload
   function createGenerateUrlPayload(filename) {
     const payload = {
-      contentType: 'video/mp4',
+      contentType: 'audio/mp3',
       fileName: filename
     };
     return payload;

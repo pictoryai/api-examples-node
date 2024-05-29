@@ -61,7 +61,7 @@ function createAuthTokenPayload(clientId, clientSecret) {
     };
     transcribeResult.transcript.forEach((sentence) => {
       let sentenceText = sentence.words.reduce((acc, item) => {
-        if (item.word.length > 0) {
+        if (item.word.length > 0 && item.highlight) {
           acc = acc + " " + item.word;
         }
         return acc;
@@ -71,15 +71,16 @@ function createAuthTokenPayload(clientId, clientSecret) {
       let backgroundSegments = [];
 
       sentence.words.forEach(word => {
+        if (word.highlight){
         let segment = {
             start: word.start_time,
             end: word.end_time
         };
-
         backgroundSegments.push(segment);
+      }
     });
 
-      if(transcribeResult)
+      if(transcribeResult && sentenceText.length>0)
       storyBoardJob.scenes.push({
         text: sentenceText,
         backgroundUri: fileUrl,
