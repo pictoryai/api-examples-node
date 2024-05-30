@@ -9,7 +9,7 @@ async function getToken(CLIENT_ID, CLIENT_SECRET) {
   const BASE_URL = process.env.BASE_URL;
   const AUTH_ROUTE = process.env.AUTH_ROUTE;
   const url = `${BASE_URL}${AUTH_ROUTE}`;
-  const authPayload = payloads.createAuthTokenPayload(CLIENT_ID, CLIENT_SECRET);
+  const authPayload = JSON.stringify(payloads.createAuthTokenPayload(CLIENT_ID, CLIENT_SECRET));
   const headers = payloads.setAuthHeaders()
 
   try {
